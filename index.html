@@ -4517,6 +4517,62 @@ if(document.fonts&&document.fonts.ready)
     drawPathFor('cmap-nodes','cmap-path');
     drawPathFor('amap-nodes','amap-path');
   });
+
+/* PLEASE WORK DADDY */
+(function(){
+  function redeemNow(){
+    var inp=document.getElementById('redeem-in');
+    if(!inp)return;
+    var code=inp.value.trim().toUpperCase();
+    if(code==='COMPLEXHTML4FREE'){
+      save.complexUnlocked=true;
+      persist(); updateProgressUI();
+      inp.value='';
+      sfx.win(); sfx.dark();
+      confettiBurst(90); setTimeout(function(){confettiBurst(60);},400);
+      toast('⚡ COMPLEX HTML UNLOCKED. Enter the dark…');
+    }else if(code==='ALLSAVES4FREE'){
+      save.unlocked=LEVELS.length;
+      save.cunlocked=BUILD_LEVELS.length;
+      save.aunlocked=ADV_LEVELS.length;
+      save.complexUnlocked=true;
+      save.stars=LEVELS.map(function(){return 3;});
+      save.cstars=BUILD_LEVELS.map(function(){return 3;});
+      save.astars=ADV_LEVELS.map(function(){return 3;});
+      save.xstars=COMPLEX_LEVELS.map(function(){return 3;});
+      BUILD_LEVELS.forEach(function(lv,i){ save.examples['b'+i]=lv.goal.join('\n'); });
+      ADV_LEVELS.forEach(function(lv,i){ save.examples['a'+i]=lv.goal.join('\n'); });
+      COMPLEX_LEVELS.forEach(function(lv,i){
+        save.examples['c'+i]=lv.parts[lv.parts.length-1].goal.join('\n');
+      });
+      persist(); updateProgressUI();
+      inp.value='';
+      sfx.win(); sfx.dark();
+      confettiBurst(120);
+      setTimeout(function(){confettiBurst(90);},350);
+      setTimeout(function(){confettiBurst(90);},700);
+      setTimeout(function(){confettiBurst(70);},1050);
+      toast('👑 EVERYTHING UNLOCKED — all stars, all maps, all saves!');
+    }else{
+      sfx.wrong();
+      var box=document.getElementById('redeem-box');
+      if(box){box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');}
+      toast(code?'Hmm… that code does nothing. Yet.':'Type a code first!');
+    }
+  }
+  var btn=document.getElementById('redeem-go');
+  if(btn){
+    var nb=btn.cloneNode(true);
+    btn.parentNode.replaceChild(nb,btn);
+    nb.addEventListener('click',redeemNow);
+  }
+  var inp=document.getElementById('redeem-in');
+  if(inp){
+    var ni=inp.cloneNode(true);
+    inp.parentNode.replaceChild(ni,inp);
+    ni.addEventListener('keydown',function(e){ if(e.key==='Enter')redeemNow(); });
+  }
+})();
 </script>
 </body>
 </html>
